@@ -17,7 +17,7 @@ p.xaxis.ticker.desired_num_ticks = 30
 
 linelist = []
 for x in range(0,40):
-	linelist.append(p.line([], [], line_width=2, alpha=0.9, muted_alpha=0.2, color='grey', legend_label=str(x)))
+	linelist.append(p.line([], [], line_width=2, alpha=0.9, muted_alpha=0.2, color='grey', legend_label=str(x+1)))
 
 dslist = []
 for x in range(0,40):
