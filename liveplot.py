@@ -2,29 +2,16 @@
 from bokeh.plotting import figure, curdoc
 from bokeh.driving import linear
 from bokeh.models import Legend
+from bokeh.models import ColumnDataSource, HoverTool, DatetimeTickFormatter, DatetimeTicker, Legend
 import random
 import pandas as pd
-
-
-from bokeh.models import ColumnDataSource, HoverTool, DatetimeTickFormatter, DatetimeTicker
+from datetime import datetime
 
 import database as rdb
 
-
-
-# TODO
-# Format datetimes more pleasingly
-# perhaps do multiline hover
-# clean up repo
-# set up time to meet
-
-# multi line hover answers:
-# https://stackoverflow.com/questions/49282078/multiple-hovertools-for-different-lines-bokeh
-
-
 p = figure(plot_width=2000, plot_height=1000, x_axis_type="datetime")
 
-p.xaxis.formatter=DatetimeTickFormatter(minutes = [':%M', '%Mm'])
+# p.xaxis.formatter=DatetimeTickFormatter(minutes = [':%M', '%Mm'])
 # p.xaxis.ticker = DatetimeTicker(desired_num_ticks=30)
 p.xaxis.ticker.desired_num_ticks = 30
 
@@ -44,9 +31,13 @@ def load_data():
 
 
 	dbdata = rdb.get_records()
-
 	df = pd.DataFrame(dbdata)
-	datetimes = pd.to_datetime(df[1]).values
+
+	datetimes = []
+
+	for timestamp in df[1].values:
+		dateobj = datetime.fromtimestamp(int(timestamp))
+		datetimes.append(dateobj)
 
 	for i in range(0,40):
 		dslist[i].data['x'] = datetimes
@@ -61,7 +52,7 @@ def update(step):
 
 curdoc().add_root(p)
 
-# Add a periodic callback to be run every 1000 milliseconds
+# Add a periodic callback to be run every n milliseconds
 curdoc().add_periodic_callback(update, 5000)
 
 load_data()
