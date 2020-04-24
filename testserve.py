@@ -9,7 +9,7 @@ import time
 
 import database as rdb
 
-p = figure(plot_width=1500, plot_height=1000, x_axis_type="auto")
+p = figure(plot_width=2000, plot_height=1000, x_axis_type="datetime")
 
 # p.xaxis.formatter=DatetimeTickFormatter(minutes = [':%M', '%Mm'])
 # p.xaxis.ticker = DatetimeTicker(desired_num_ticks=30)
@@ -32,11 +32,6 @@ def load_data():
 
 	dbdata = rdb.get_records()
 	df = pd.DataFrame(dbdata)
-
-
-
-
-	print(df)
 
 	datetimes = []
 
